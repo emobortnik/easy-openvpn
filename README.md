@@ -8,7 +8,7 @@ Once the script has executed, you can run it again to add more users (certificat
 1. You need to get server [here](https://scaleway.com).
 2. [Connect via ssh](https://www.howtogeek.com/311287/how-to-connect-to-an-ssh-server-from-windows-macos-or-linux/) to your server and then execute following command:
 
-`wget https://git.io/vbAzp -O easy-openvpn-install.sh && chmod +x easy-openvpn-install.sh && ./easy-openvpn-install.sh`
+`wget https://git.io/vbjTX -O easy-openvpn-install.sh && chmod +x easy-openvpn-install.sh && ./easy-openvpn-install.sh`
 
 3. [Connect to OpenVPN Server](https://openvpn.net/index.php/access-server/docs/admin-guides-sp-859543150/howto-connect-client-configuration.html) which you have just created via [OpenVPN client](https://openvpn.net/index.php/open-source/downloads.html).
 
