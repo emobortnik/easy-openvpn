@@ -32,16 +32,16 @@ read -n1 -r -p "                           Press any key when you got access tok
 telegram-send --configure --global-config
 
 
-echo "if everuthing was fine, you should see  these writting:"
+echo "if everything was fine, you should see  these writting:"
 echo ""
 echo ""
 echo -e "\e[32mCongratulations NAME! telegram-send is now ready for use!\e[0m"
 
+echo "but if was just external config which is located cat /etc/telegram-send.conf - i advise to save it."
 
-echo "and now we need to create internal config "
+echo "So, lets go to create internal config "
 
 telegram-send --configure  && telegram-send "this is test message:)"
-
 
 
 
