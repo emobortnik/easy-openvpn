@@ -1228,7 +1228,7 @@ echo ''
 if [[ -e /usr/local/bin/telegram-send ]] ; then
 echo -e "Would you like to get \e[31m$DSTORE/$CLIENT.ovpn\e[0m to your Telegram chanel?"
 
-       while [[ $GETTG != "1" && $GETTG != "2" ]]; do
+       while [[ $GETTG != "y" && $GETTG != "n" ]]; do
 echo ""
     read -p " [y/n]: " -e -i y GETTG
 echo ""
