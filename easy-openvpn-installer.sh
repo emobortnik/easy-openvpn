@@ -39,6 +39,59 @@ cd easy-rsa/
  }
 
 
+newclient () {
+        # Where to write the custom client.ovpn?
+DSTORE=$(egrep -v '^#|^$'  /etc/openvpn/locate.txt)
+
+        # Generates the custom client.ovpn
+        cp /etc/openvpn/client-template.txt $DSTORE/$1.ovpn
+        echo "<ca>" >> $DSTORE/$1.ovpn
+        cat /etc/openvpn/easy-rsa/pki/ca.crt >> $DSTORE/$1.ovpn
+        echo "</ca>" >> $DSTORE/$1.ovpn
+        echo "<cert>" >> $DSTORE/$1.ovpn
+        cat /etc/openvpn/easy-rsa/pki/issued/$1.crt >> $DSTORE/$1.ovpn
+        echo "</cert>" >> $DSTORE/$1.ovpn
+        echo "<key>" >> $DSTORE/$1.ovpn
+        cat /etc/openvpn/easy-rsa/pki/private/$1.key >> $DSTORE/$1.ovpn
+        echo "</key>" >> $DSTORE/$1.ovpn
+        echo "key-direction 1" >> $DSTORE/$1.ovpn
+        echo "<tls-auth>" >> $DSTORE/$1.ovpn
+        cat /etc/openvpn/tls-auth.key >> $DSTORE/$1.ovpn
+        echo "</tls-auth>" >> $DSTORE/$1.ovpn
+}
+
+
+
+
+
+
+
+
+
+
+
+
+congratulation () {
+
+echo -e "\e[1m\e[42m
+
+                                          ####     ###    #     #    ####   ######      #     #######  #     #  #           #     #######   #####     ###    #     #   #####  
+                                         #    #   #   #   ##    #   #    #  #     #     #        #     #     #  #           #        #        #      #   #   ##    #  #     # 
+                                        #        #     #  # #   #  #        #     #    ###       #     #     #  #          ###       #        #     #     #  # #   #  #       
+                                        #        #     #  #  #  #  #   ###  ######     # #       #     #     #  #          # #       #        #     #     #  #  #  #   #####  
+                                        #        #     #  #   # #  #     #  #   #     #####      #     #     #  #         #####      #        #     #     #  #   # #        # 
+                                         #    #   #   #   #    ##   #    #  #    #    #   #      #     #     #  #         #   #      #        #      #   #   #    ##  #     # 
+                                          ####     ###    #     #    #####  #     #  ##   ##     #      #####   ######   ##   ##     #      #####     ###    #     #   #####  
+
+
+\e[0m\e[0m"
+
+
+                  }
+
+
+
+
 
 if [[ -e /etc/debian_version ]]; then
 	OS="debian"
@@ -148,31 +201,10 @@ echo "##########################################################################
 ########################################################################################################"
 NUMBEROFCLIENTS=$(tail -n +2 /etc/openvpn/easy-rsa/pki/index.txt | grep -c "^V")
 
-newclient () {
-        # Where to write the custom client.ovpn?
-DSTORE=$(egrep -v '^#|^$'  /etc/openvpn/locate.txt)
-
-        # Generates the custom client.ovpn
-        cp /etc/openvpn/client-template.txt $DSTORE/$1.ovpn
-        echo "<ca>" >> $DSTORE/$1.ovpn
-        cat /etc/openvpn/easy-rsa/pki/ca.crt >> $DSTORE/$1.ovpn
-        echo "</ca>" >> $DSTORE/$1.ovpn
-        echo "<cert>" >> $DSTORE/$1.ovpn
-        cat /etc/openvpn/easy-rsa/pki/issued/$1.crt >> $DSTORE/$1.ovpn
-        echo "</cert>" >> $DSTORE/$1.ovpn
-        echo "<key>" >> $DSTORE/$1.ovpn
-        cat /etc/openvpn/easy-rsa/pki/private/$1.key >> $DSTORE/$1.ovpn
-        echo "</key>" >> $DSTORE/$1.ovpn
-        echo "key-direction 1" >> $DSTORE/$1.ovpn
-        echo "<tls-auth>" >> $DSTORE/$1.ovpn
-        cat /etc/openvpn/tls-auth.key >> $DSTORE/$1.ovpn
-        echo "</tls-auth>" >> $DSTORE/$1.ovpn
-}
-
 
 echo ""
 echo ""
-		read -p "Select an option [1-5]: " -e -i 1 option
+		read -p "Select an option [1-5]: " -e  option
 
               case $option in
              1)
@@ -250,8 +282,27 @@ case $SET_PASSWORD in
 
 			newclient "$CLIENT"
 			echo ""
-        echo -e "Certificat  was successfully created and located in: \e[31m$DSTORE/$CLIENT.ovpn\e[0m" | sed s#//*#/#g
+echo ''
 
+congratulation 
+echo ''
+
+        echo -e "File \e[31m$DSTORE/$CLIENT.ovpn\e[0m was created succsesfully" | sed s#//*#/#g
+echo ''
+echo ''
+echo ''
+#echo "Would you like to get  \e[31m$CLIENT.ovpn\e[0m to your Telegram chanel?"
+# telegram-send -f  $DSTORE/$CLIENT.ovpn
+
+
+#	while [[ $SET_PASSWORD != "1" && $SET_PASSWORD != "2" ]]; do
+#echo ""
+#    read -p "Should i send?[y/n]: " -e -i y SET_PASSWORD
+#echo ""
+#	done
+
+
+		
 			exit
 			;;
 			2)			
@@ -405,7 +456,7 @@ read -p "Path [can write own]: " -e -i /home/vpn/ DSTORE
 if ! [ -d $DSTORE ]; then
 mkdir -p $DSTORE/keys/ && mkdir -p $DSTORE/logs
 fi
-echo $DSTORE/keys/ | sed s#//*#/#g | tee  /etc/openvpn/locate.txt
+echo $DSTORE/keys/ | sed s#//*#/#g | tee  /etc/openvpn/locate.txt > /dev/null 2>1
 
 
 restartservice () {
@@ -781,6 +832,9 @@ echo ""
 echo ""
 
 
+#telega ask
+
+
 echo -ne '\e[1;33;4;44mOkay, that was all I needed. Installation will start in 5 seconds...\r\e[0m\n'
 sleep 1
 echo -ne '\e[1;33;4;44mOkay, that was all I needed. Installation will start in 4 seconds...\r\e[0m\n'
@@ -991,7 +1045,7 @@ $CIPHER
 tls-server
 tls-version-min 1.2
 tls-cipher TLS-DHE-RSA-WITH-AES-128-GCM-SHA256
-status openvpn.log
+status /var/log/openvpn.log
 verb 3" >> /etc/openvpn/server.conf
 
 
@@ -1057,7 +1111,6 @@ verb 3" >> /etc/openvpn/server.conf
 		fi
 	fi
 
-restartservice > /dev/null 2>&1
 
 
 	# Try to detect a NATed connection and ask about it to potential LowEndSpirit/Scaleway users
@@ -1094,27 +1147,18 @@ echo ''
         cp pki/ca.crt pki/private/ca.key dh.pem pki/issued/server.crt pki/private/server.key /etc/openvpn/easy-rsa/pki/crl.pem /etc/openvpn 
         chmod 644 /etc/openvpn/crl.pem 
 
+restartservice > /dev/null 2>&1
 
 
 newclient "$CLIENT"
 
+congratulation
 
-echo -e "\e[1m\e[1;34m
-                                                                                                                                       
-                                          ####     ###    #     #    ####   ######      #     #######  #     #  #           #     #######   #####     ###    #     #   #####  
-                                         #    #   #   #   ##    #   #    #  #     #     #        #     #     #  #           #        #        #      #   #   ##    #  #     # 
-                                        #        #     #  # #   #  #        #     #    ###       #     #     #  #          ###       #        #     #     #  # #   #  #       
-                                        #        #     #  #  #  #  #   ###  ######     # #       #     #     #  #          # #       #        #     #     #  #  #  #   #####  
-                                        #        #     #  #   # #  #     #  #   #     #####      #     #     #  #         #####      #        #     #     #  #   # #        # 
-                                         #    #   #   #   #    ##   #    #  #    #    #   #      #     #     #  #         #   #      #        #      #   #   #    ##  #     # 
-                                          ####     ###    #     #    #####  #     #  ##   ##     #      #####   ######   ##   ##     #      #####     ###    #     #   #####  
-                                                                                                                                       
-                                                                                                                                       
-\e[0m\e[0m"
+
 echo ''
 echo ''
 
-echo -e "Certificat  was successfully created and located in: \e[31m$DSTORE/keys/$CLIENT.ovpn\e[0m" | sed s#//*#/#g
+echo -e "Certificat  was successfully created and located in: \e[31m$DSTORE/$CLIENT.ovpn\e[0m" | sed s#//*#/#g
 
 echo 'If you need more clients, so, just execute this script again'
 echo ''
