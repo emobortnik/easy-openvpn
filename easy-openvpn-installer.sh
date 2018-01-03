@@ -293,7 +293,7 @@ echo ''
 echo ''
 echo ''
 if [[ -e /usr/local/bin/telegram-send ]] ; then
-echo -e "Would you like to get  \e[31m$DSTORE/$CLIENT.ovpn\e[0m to your Telegram chanel?"| sed s#//*#/#g
+echo -e "Would you like to get \e[31m$DSTORE/$CLIENT.ovpn\e[0m to your Telegram chanel?" | sed s#//*#/#g
 
        while [[ $GETTG != "y" && $GETTG != "n" ]]; do
 echo ""
@@ -1226,7 +1226,7 @@ echo ''
 echo ''
 
 if [[ -e /usr/local/bin/telegram-send ]] ; then
-echo -e "Would you like to get \e[31m$DSTORE/$CLIENT.ovpn\e[0mm to your Telegram chanel?"
+echo -e "Would you like to get \e[31m$DSTORE/$CLIENT.ovpn\e[0m to your Telegram chanel?"
 
        while [[ $GETTG != "1" && $GETTG != "2" ]]; do
 echo ""
