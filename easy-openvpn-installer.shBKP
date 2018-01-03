@@ -18,8 +18,6 @@ fi
 
 
 
-
-
 HERE=$PWD
 
 wgetgit () {
@@ -292,25 +290,9 @@ echo ''
         echo -e "File \e[31m$DSTORE/$CLIENT.ovpn\e[0m was created succsesfully" | sed s#//*#/#g
 echo ''
 echo ''
-if [[ -e /usr/local/bin/telegram-send ]] ; then
-echo -e "Would you like to get  \e[31m$DSTORE/$CLIENT.ovpn\e[0m to your Telegram chanel?"| sed s#//*#/#g
-
-       while [[ $GETTG != "y" && $GETTG != "n" ]]; do
-echo ""
-    read -p "Send you? [y/n]: " -e -i y GETTG
-echo ""
-       done
-
-if [[ $GETTG = "y" ]]; then
+echo ''
+Echo "Would you like to get  \e[31m$CLIENT.ovpn\e[0m to your Telegram chanel?"
  telegram-send -f  $DSTORE/$CLIENT.ovpn
-fi
-else
-exit           
-fi
-
-
-
-
 
 			exit
 			;;
@@ -841,51 +823,6 @@ echo ""
 echo ""
 
 
-
-echo -ne '\e[1;33;4;44mDo\r\e[0m'
-sleep 0.05
-echo -ne '\e[1;33;4;44mDo you\r\e[0m'
-sleep 0.05
-echo -ne '\e[1;33;4;44mDo you need\r\e[0m'
-sleep 0.05
-echo -ne '\e[1;33;4;44mDo you need to\r\e[0m'
-sleep 0.05
-echo -ne '\e[1;33;4;44mDo you need to configure\r\e[0m'
-sleep 0.05
-echo -ne '\e[1;33;4;44mDo you need to configure Telegram\r\e[0m'
-sleep 0.05
-echo -ne '\e[1;33;4;44mDo you need to configure Telegram notificator?\r\e[0m'
-sleep 0.05
-echo ''
-echo ''
-echo "More about it you can read here: https://git.io/vbhpH"
-echo ""
-echo "For this I need downloaded Python dependiens."
-echo ""
-
-while [[ $CONFIGURE != "y" && $CONFIGURE != "n" ]]; do
-			read -p "Configure notificator? [y/n]: " -e -i y CONFIGURE
-		done
-
-echo ''
-echo ''
-if [[ -e /usr/local/bin/telegram-send ]] ; then
-echo  "It seems like you have already installed telegram-send or fork. So, if you are haveng problem with it, you can try to reconfigure conf file"
-echo ''
- echo -e "\e[42mtelegram-send --configure\e[0m"
-echo ''
- echo -e "\e[42mtelegram-send --configure --global-config\e[0m"
-echo 'and'
-else
-
-wget https://git.io/vbjeu -O telegram-notificator.sh && chmod +x telegram-notificator.sh   && ./telegram-notificator.sh
-fi
-
-
-#fi
-
-echo ''
-echo ''
 echo -ne '\e[1;33;4;44mOkay, that was all I needed. Installation will start in 5 seconds...\r\e[0m\n'
 sleep 1
 echo -ne '\e[1;33;4;44mOkay, that was all I needed. Installation will start in 4 seconds...\r\e[0m\n'
@@ -898,12 +835,6 @@ echo -ne '\e[1;33;4;44mOkay, that was all I needed. Installation will start in 1
 echo ''
 echo ''
 sleep 1
-
-
-
-
-
-
 
 	if [[ "$OS" = 'debian' ]]; then
 		apt-get install ca-certificates -y
@@ -934,11 +865,7 @@ sleep 1
 		fi
 		# Ubuntu >= 16.04 and Debian > 8 have OpenVPN > 2.3.3 without the need of a third party repository.
 		# The we install OpenVPN
-		apt-get install openvpn iptables openssl wget ca-certificates curl -y 
-echo ""
-echo ""
-
-
+		apt-get install openvpn iptables openssl wget ca-certificates curl -y
 		# Install iptables service
 		if [[ ! -e /etc/systemd/system/iptables.service ]]; then
 			mkdir /etc/iptables
@@ -1224,24 +1151,6 @@ echo -e "Certificat  was successfully created and located in: \e[31m$DSTORE/$CLI
 echo 'If you need more clients, so, just execute this script again'
 echo ''
 echo ''
-
-if [[ -e /usr/local/bin/telegram-send ]] ; then
-echo -e "Would you like to get \e[31m$DSTORE/$CLIENT.ovpn\e[0mm to your Telegram chanel?"
-
-       while [[ $GETTG != "1" && $GETTG != "2" ]]; do
-echo ""
-    read -p " [y/n]: " -e -i y GETTG
-echo ""
-       done
-
-if [[ $GETTG = "y" ]]; then
-
- telegram-send -f  $DSTORE/$CLIENT.ovpn
-
-fi
-          
-fi
-
 
 
                 while [[ "$ADDMORECLIENTS" != "y" && "$ADDMORECLIENTS" != "n" ]]; do
