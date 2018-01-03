@@ -1,28 +1,22 @@
 #!/bin/bash
 
 
-if [[ "$EUID" -ne 0 ]]; then
-	echo "Sorry, you need to run this as root"
-	exit 1
-fi
-
-
 if [[ -e /etc/debian_version ]]; then
 	OS="debian"
 fi
 
 
 
-#тут проверка или есть питон установлен
+#check if python is already installed
 
 
 if [[ 	OS="debian" ]]; then 
 apt-get update &&  apt-get install software-properties-common python-software-properties curl wget htop -y && 
 add-apt-repository ppa:jonathonf/python-3.6 -y &&  apt-get update && apt-get install python3.6 git -y &&  apt-get install python3-pip -y && 
-curl -O https://bootstrap.pypa.io/get-pip.py && /usr/bin/python3.5m get-pip.py && sudo pip3 install telegram-send
+curl -O https://bootstrap.pypa.io/get-pip.py && /usr/bin/python3.5m get-pip.py && sudo pip3 install telegram-send && 
 
 
-echo "Now you should open https://telegram.me/BotFather and create bot. And afreк it you will be able to get access token"
+echo "Now you should open https://telegram.me/BotFather and create bot. And afrer it you will be able to get access token"
 echo ""
 echo ""
 echo " If you are having problems with it, so, to not hesitate to ask google."
@@ -43,6 +37,7 @@ echo "So, lets go to create internal config "
 
 telegram-send --configure  && telegram-send "this is test message:)"
 
-
-
+else 
+echo "Soon will be packages for other OS but I am a human and want to sleeep too"
+fi
 
