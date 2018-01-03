@@ -35,7 +35,13 @@ telegram-send --configure --global-config
 echo "if everuthing was fine, you should see  these writting:"
 echo ""
 echo ""
-echo -e "\e[32mCongratulations emobort! telegram-send is now ready for use!\e[0m"
+echo -e "\e[32mCongratulations NAME! telegram-send is now ready for use!\e[0m"
+
+
+echo "and now we need to create internal config "
+
+telegram-send --configure  && telegram-send "this is test message:)"
+
 
 
 
